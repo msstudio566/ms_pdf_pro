@@ -6,10 +6,10 @@ on:
       - master
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04  # एकदम स्थिर (Stable) लिनक्स सर्वर
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v3
+      - uses: actions/checkout@v4 # अपडेटेड वर्जन 4
+      - uses: actions/setup-java@v4 # अपडेटेड वर्जन 4
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -19,7 +19,7 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk --debug
       - name: Upload APK
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 # यहाँ हमने पुराना v3 बदलकर नया v4 कर दिया है
         with:
           name: MS-PDF-PRO-v1.0
           path: build/app/outputs/flutter-apk/app-debug.apk
