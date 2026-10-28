@@ -1,0 +1,16 @@
+name: ms_pdf_pro
+description: MS PDF PRO - Advanced PDF Android Tool with Crop Option.
+publish_to: 'none'
+version: 1.0.0+1
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+dependencies:
+  flutter:
+    sdk: flutter
+  syncfusion_flutter_pdfviewer: ^26.1.1
+  syncfusion_flutter_pdf: ^26.1.1
+  path_provider: ^2.1.3
+  file_picker: ^8.0.0
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
