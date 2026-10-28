@@ -6,31 +6,33 @@ on:
       - master
 jobs:
   build:
-    runs-on: ubuntu-22.04  # स्टेबल पुराना लिनक्स ताकि नोड का कोई लफड़ा न हो
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true' # पुराने नोड को चलने की इजाजत दें
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: 'oracle'
           java-version: '17'
           
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-          flutter-version: '3.19.6' # स्टेबल फ्लटर वर्जन ताकि कोई एरर न आए
+      - name: Setup Flutter Engine
+        run: |
+          git clone https://github.com -b stable --depth 1
+          echo "$GITHUB_WORKSPACE/flutter/bin" >> $GITHUB_PATH
           
-      - name: Install dependencies
-        run: flutter pub get
-        
-      - name: Build debug APK
-        run: flutter build apk --debug
-        
-      - name: Upload APK
+      - name: Download App Packages
+        run: |
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter pub get
+          
+      - name: Build MS PDF PRO APK
+        run: |
+          export PATH="$PATH:$GITHUB_WORKSPACE/flutter/bin"
+          flutter build apk --debug
+          
+      - name: Upload Finished APK
         uses: actions/upload-artifact@v4
         with:
           name: MS-PDF-PRO-v1.0
